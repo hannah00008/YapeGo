@@ -22,21 +22,56 @@ function VideoCard({ video, nombre }) {
 // 🌟 Card historias
 function StoryCard({ image, titulo, descripcion, onClick }) {
   return (
-    <div className="relative min-w-[300px] md:min-w-[400px] h-[220px] rounded-3xl overflow-hidden shadow-xl group">
-      <div
-  onClick={onClick}
-  className="cursor-pointer relative min-w-[300px] md:min-w-[400px] h-[220px] rounded-3xl overflow-hidden shadow-xl group"
-></div>
+    <div
+      onClick={onClick}
+      className="cursor-pointer relative min-w-[300px] md:min-w-[400px] h-[220px] rounded-3xl overflow-hidden shadow-xl group"
+    >
       <img
         src={image}
         className="w-full h-full object-cover group-hover:scale-110 transition duration-500"
       />
+
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+
       <div className="absolute bottom-4 left-4 right-4 text-white">
         <h3 className="text-lg font-bold">{titulo}</h3>
         <p className="text-sm opacity-80">{descripcion}</p>
       </div>
     </div>
+  );
+
+
+}
+
+    function TestimonioCard({ image, nombre, area, descripcion }) {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <motion.div layout className="bg-white rounded-2xl shadow-md overflow-hidden">
+      <img src={image} className="w-full h-56 object-cover" />
+
+      <div className="p-4">
+        <h3 className="font-bold text-gray-900">{nombre}</h3>
+        <p className="text-sm text-gray-500">{area}</p>
+
+        {open && (
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="mt-3 text-gray-600 text-sm"
+          >
+            {descripcion}
+          </motion.p>
+        )}
+
+        <button
+          onClick={() => setOpen(!open)}
+          className="text-purple-600 font-semibold mt-3"
+        >
+          {open ? "Ver menos" : "Ver más"}
+        </button>
+      </div>
+    </motion.div>
   );
 }
 
@@ -44,17 +79,17 @@ export default function Inspiracion() {
   const [selectedStory, setSelectedStory] = useState(null);
   const historias = [
     {
-      image: "https://images.unsplash.com/photo-1529333166437-7750a6dd5a70",
+      image: "https://www.shutterstock.com/image-photo/cryptocurrency-exchange-growth-charts-bullish-260nw-2740790805.jpg",
       titulo: "De provincia a fintech",
       descripcion: "Cómo Luis encontró su oportunidad en Yape",
     },
     {
-      image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330",
+      image: "https://cdn1.eldia.com/032025/1742874795275.jpg?&cw=630",
       titulo: "Rompiendo barreras",
       descripcion: "Valeria y su camino en tecnología",
     },
     {
-      image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e",
+      image: "https://media.licdn.com/dms/image/v2/C4E12AQGIrlIFnpE8qg/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1537985933155?e=2147483647&v=beta&t=8FMFS-OsxA2t15lFVVe_Mn6tUNQfGE10VDArkKYk3eY",
       titulo: "Confianza y crecimiento",
       descripcion: "Diego y su evolución profesional",
     },
@@ -70,6 +105,45 @@ export default function Inspiracion() {
     nombre: "Historia de Diego",
   },
 
+];
+
+  const testimonios = [
+  {
+    image: "https://www.yape.com.pe/_next/image?url=https%3A%2F%2Fwww.datocms-assets.com%2F56886%2F1743175588-img.jpg&w=750&q=100",
+    nombre: "Shen Tay Wo Chong",
+    area: "Tecnología",
+    descripcion: "Me encanta trabajar en Yape! Saber que tu trabajo está presente en el día a día de las personas es un orgullo, y hacerlo junto a un equipo fantástico de personas, es realmente motivador.",
+  },
+  {
+    image: "https://www.yape.com.pe/_next/image?url=https%3A%2F%2Fwww.datocms-assets.com%2F56886%2F1743175857-img-7-1.jpg&w=384&q=100",
+    nombre: "Jorge Escobedo",
+    area: "Data",
+    descripcion: "Nuestro equipo innova constantemente y persigue la excelencia para transformar el futuro financiero del Perú.",
+  },
+  {
+    image: "https://www.yape.com.pe/_next/image?url=https%3A%2F%2Fwww.datocms-assets.com%2F56886%2F1743175782-img-1.jpg&w=384&q=100",
+    nombre: "Valeria Soto",
+    area: "Retail",
+    descripcion: "Trabajar en Yape para mí es tener un un mundo lleno de oportunidades para hacer las cosas posibles, de forma diferente, con muchísimo aprendizaje y sobre todo con impacto social. Además de crecer aceleradamente como persona y profesional.",
+  },
+  {
+    image: "https://www.yape.com.pe/_next/image?url=https%3A%2F%2Fwww.datocms-assets.com%2F56886%2F1743175644-img-3-1.jpg&w=384&q=100",
+    nombre: "Mauricio Villena",
+    area: "Tecnología",
+    descripcion: "Me encanta trabajar en Yape! Saber que tu trabajo está presente en el día a día de las personas es un orgullo, y hacerlo junto a un equipo fantástico de personas, es realmente motivador.",
+  },
+  {
+    image: "https://www.yape.com.pe/_next/image?url=https%3A%2F%2Fwww.datocms-assets.com%2F56886%2F1743175735-img-6.jpg&w=384&q=100",
+    nombre: "Nicolas del Águila",
+    area: "Data",
+    descripcion: "Nuestro equipo innova constantemente y persigue la excelencia para transformar el futuro financiero del Perú.",
+  },
+  {
+    image: "https://www.yape.com.pe/_next/image?url=https%3A%2F%2Fwww.datocms-assets.com%2F56886%2F1743175828-img-4.jpg&w=750&q=100",
+    nombre: "Natalia Prieto",
+    area: "Retail",
+    descripcion: "Trabajar en Yape para mí es tener un un mundo lleno de oportunidades para hacer las cosas posibles, de forma diferente, con muchísimo aprendizaje y sobre todo con impacto social. Además de crecer aceleradamente como persona y profesional.",
+  },
 ];
 
   return (
@@ -160,6 +234,18 @@ export default function Inspiracion() {
     </div>
   </div>
 )}
+
+    <section className="max-w-6xl mx-auto mt-20">
+  <h2 className="text-3xl font-black mb-10 text-gray-900">
+    Nuestros Yapers
+  </h2>
+
+  <div className="grid md:grid-cols-3 gap-6">
+    {testimonios.map((t, i) => (
+      <TestimonioCard key={i} {...t} />
+    ))}
+  </div>
+</section>
 
     </div>
 
