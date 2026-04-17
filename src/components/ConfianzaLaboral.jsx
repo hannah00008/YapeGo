@@ -1,142 +1,140 @@
 import React from 'react';
-// Usamos iconos estándar de Lucide que NO darán error
-import { ShieldCheck, AlertTriangle, CheckCircle, Flag, Lock, Zap, Users, Building2, ExternalLink } from 'lucide-react';
+import { ShieldCheck, AlertTriangle, CheckCircle, Building2, Users, Lock } from 'lucide-react';
 
 const ConfianzaLaboral = () => {
-  // Datos para el Checklist con iconos propios
-  const checklistItems = [
-    { text: "RUC de empresa validado", icon: <Building2 size={16} /> },
-    { text: "Contacto de reclutador real", icon: <Users size={16} /> },
-    { text: "Oferta sin cobros ocultos", icon: <Zap size={16} /> },
-    { text: "Sin solicitud de claves", icon: <Lock size={16} /> }
-  ];
-
   return (
-    <section className="py-24 px-6 bg-white relative overflow-hidden font-sans">
-      {/* Fondo Decorativo Sutil (Estilo Moderno) */}
-      <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
-        <svg width="100%" height="100%"><defs><pattern id="dotted-pattern" width="32" height="32" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="2" fill="#7422c4"/></pattern></defs><rect width="100%" height="100%" fill="url(#dotted-pattern)"/></svg>
-      </div>
-
-      <div className="max-w-7xl mx-auto relative z-10">
+    <div className="min-h-screen bg-[#fafbff] pt-40 pb-20 px-6 font-sans">
+      <div className="max-w-6xl mx-auto">
         
-        {/* Encabezado con Tipografía Audaz */}
-        <div className="text-center mb-20 space-y-3">
-          <span className="text-[#7422c4] font-semibold text-sm uppercase tracking-[0.2em]">Seguridad ante todo</span>
-          <h2 className="text-5xl md:text-6xl font-extrabold text-gray-950 tracking-tighter leading-tight">
-            Tu Futuro Profesional, <span className="text-[#7422c4]">Protegido</span>
-          </h2>
-          <p className="text-gray-600 max-w-2xl mx-auto font-light leading-relaxed pt-2">
-            En Yape Go construimos un ecosistema de confianza. Aquí te enseñamos a identificar oportunidades reales y seguras.
+        {/* --- SECCIÓN HERO (CABECERA) --- */}
+        <div className="text-center mb-20">
+          <div className="inline-flex items-center gap-2 bg-green-50 text-green-600 px-5 py-2 rounded-full text-sm font-bold mb-6 border border-green-100 shadow-sm animate-bounce-short">
+            <ShieldCheck size={20} />
+            Tu seguridad es nuestra prioridad
+          </div>
+          <h1 className="text-5xl md:text-6xl font-black text-gray-900 mb-6 tracking-tight leading-tight">
+            Navega con <span className="text-[#7422ed]">Seguridad Total</span>
+          </h1>
+          <p className="text-gray-500 text-xl max-w-3xl mx-auto leading-relaxed">
+            En Yape Go aplicamos filtros avanzados para que solo interactúes con empresas reales y oportunidades legítimas.
           </p>
         </div>
 
-        {/* Grid Principal Rediseñado */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
+        {/* --- GRID DE INFORMACIÓN PRINCIPAL --- */}
+        <div className="grid md:grid-cols-12 gap-8 mb-20">
           
-          {/* Bloque Izquierdo: Verificación y Alertas (Glassmorphism) */}
-          <div className="lg:col-span-8 space-y-10">
-            
-            {/* 1. Tarjeta de Verificación Premium */}
-            <div className="bg-white p-10 rounded-[2.5rem] shadow-[0_15px_60px_-15px_rgba(116,34,196,0.08)] border border-gray-100 flex flex-col md:flex-row gap-10 items-center transform transition-all hover:scale-[1.01]">
-              <div className="bg-emerald-50 p-7 rounded-3xl text-emerald-600 border border-emerald-100 shadow-inner">
-                <ShieldCheck size={56} strokeWidth={1.5} />
-              </div>
-              <div className="space-y-3 text-center md:text-left flex-1">
-                <div className="flex items-center gap-3 justify-center md:justify-start">
-                  <h3 className="text-2xl font-bold text-gray-950">✅ Empresa 100% Verificada</h3>
-                </div>
-                <p className="text-sm text-gray-600 leading-relaxed font-light">
-                  Validamos el **RUC y el contacto real** de cada reclutador. Busca el sello verde para postular con total tranquilidad.
-                </p>
-                <div className="pt-3 border-t border-gray-100 flex flex-col sm:flex-row gap-4 items-center justify-center md:justify-start">
-                  <span className="text-xs text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full font-medium">Confianza Inmediata</span>
-                  <button className="text-[#7422c4] text-xs font-semibold hover:text-[#8a33e0] flex items-center gap-1.5 transition-colors group">
-                    <Flag size={14} className="group-hover:animate-pulse" /> Reportar oferta sospechosa
-                  </button>
-                </div>
-              </div>
+          {/* Card: Empresa Verificada */}
+          <div className="md:col-span-7 bg-white rounded-[3rem] p-10 shadow-2xl shadow-purple-100/50 border border-gray-50 relative overflow-hidden group transition-all hover:scale-[1.01]">
+            <div className="absolute -top-10 -right-10 opacity-[0.03] group-hover:rotate-12 transition-transform">
+              <Building2 size={240} />
             </div>
-
-            {/* 2. Tarjeta de Alertas con Diseño de Impacto */}
-            <div className="bg-gray-950 p-10 rounded-[2.5rem] border border-gray-800 shadow-2xl relative overflow-hidden group">
-              {/* Icono de fondo decorativo */}
-              <AlertTriangle className="absolute -right-6 -bottom-6 text-gray-800 opacity-30 group-hover:scale-110 transition-transform duration-500" size={160} strokeWidth={1} />
+            
+            <div className="relative z-10">
+              <div className="w-20 h-20 bg-green-50 rounded-3xl flex items-center justify-center mb-8 text-green-500 shadow-inner">
+                <ShieldCheck size={40} strokeWidth={2.5} />
+              </div>
+              <h2 className="text-3xl font-black text-gray-900 mb-5 flex items-center gap-3">
+                Empresa 100% Verificada
+                <CheckCircle className="text-blue-500" size={28} fill="#eff6ff" />
+              </h2>
+              <p className="text-gray-600 text-lg leading-relaxed mb-8">
+                Validamos el **RUC**, la existencia legal y el contacto real de cada reclutador. Buscamos el sello verde para postular con total tranquilidad.
+              </p>
               
-              <div className="relative z-10 space-y-6">
-                <h4 className="text-red-400 font-extrabold text-xl flex items-center gap-3">
-                   <AlertTriangle size={24} /> ¡Atención a las Señales de Alerta!
-                </h4>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                  <div className="bg-white/5 p-5 rounded-2xl border border-white/10 text-sm text-red-100 font-medium flex items-center gap-3 hover:bg-white/10 transition-colors">
-                    ❌ "Paga por tu examen o capacitación"
-                  </div>
-                  <div className="bg-white/5 p-5 rounded-2xl border border-white/10 text-sm text-red-100 font-medium flex items-center gap-3 hover:bg-white/10 transition-colors">
-                    ❌ "Gana mucho dinero sin experiencia"
-                  </div>
-                </div>
-                <p className="text-xs text-gray-400 italic font-light pt-2">Recuerda: Si te piden dinero para trabajar, es una estafa. ¡No caigas!</p>
+              <div className="flex flex-wrap gap-4">
+                <span className="bg-green-100 text-green-700 px-6 py-2.5 rounded-2xl text-sm font-black uppercase tracking-wider">
+                  Confianza Inmediata
+                </span>
+                <button className="text-purple-600 font-bold text-sm hover:text-purple-800 transition-colors flex items-center gap-2 border-b-2 border-transparent hover:border-purple-200">
+                  Reportar oferta sospechosa <AlertTriangle size={16} />
+                </button>
               </div>
             </div>
           </div>
 
-          {/* Bloque Derecho: Checklist Unique (Estilo Glassmorphism) */}
-          <div className="lg:col-span-4 bg-[#7422c4]/5 backdrop-blur-sm p-10 rounded-[2.5rem] border border-[#7422c4]/10 shadow-[0_10px_40px_rgba(116,34,196,0.05)] space-y-10 relative overflow-hidden">
-             {/* Círculo decorativo de fondo */}
-             <div className="absolute -top-10 -right-10 w-40 h-40 bg-[#7422c4]/10 rounded-full blur-3xl"></div>
-             
-             <div className="relative z-10 space-y-3 text-center">
-                <CheckCircle size={40} className="text-[#7422c4] mx-auto" strokeWidth={1.5} />
-                <h4 className="font-extrabold text-2xl text-gray-950 tracking-tight">Checklist de Seguridad</h4>
-                <p className="text-xs text-gray-500 font-light">Verifica estos puntos antes de postular</p>
-             </div>
-
-             <div className="space-y-6 relative z-10">
-              {checklistItems.map((item, i) => (
-                <div key={i} className="flex items-center gap-4 group">
-                  <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center text-[#7422c4] shadow-sm border border-gray-100 group-hover:scale-110 group-hover:bg-[#7422c4] group-hover:text-white transition-all duration-300">
-                    {item.icon}
-                  </div>
-                  <span className="text-sm font-medium text-gray-800 group-hover:text-[#7422c4] transition-colors">{item.text}</span>
-                </div>
-              ))}
+          {/* Card: Checklist de Seguridad */}
+          <div className="md:col-span-5 bg-gradient-to-br from-white to-purple-50/30 rounded-[3rem] p-10 border border-purple-100 shadow-xl shadow-gray-100/50">
+            <div className="flex items-center gap-3 mb-8">
+              <div className="p-2 bg-purple-600 text-white rounded-xl">
+                <Lock size={20} />
+              </div>
+              <h3 className="text-2xl font-black text-gray-900">Checklist</h3>
             </div>
             
-            <div className="pt-8 border-t border-[#7422c4]/10 space-y-4 relative z-10">
-              <div className="flex items-center gap-3 bg-white p-4 rounded-xl shadow-inner border border-gray-100 text-gray-600 hover:text-gray-950 transition-colors">
-                <Lock size={20} className="text-[#7422c4]" />
-                <p className="text-[11px] leading-relaxed font-light">Nunca compartas tus claves o fotos de documentos sensibles.</p>
+            <ul className="space-y-5">
+              {[
+                "RUC de empresa validado ante SUNAT",
+                "Contacto de reclutador corporativo",
+                "Oferta sin cobros ocultos",
+                "Sin solicitud de claves privadas"
+              ].map((item, i) => (
+                <li key={i} className="flex items-center gap-4 bg-white p-5 rounded-[1.5rem] shadow-sm border border-purple-50 hover:border-purple-200 transition-colors">
+                  <div className="bg-purple-100 text-[#7422ed] rounded-full p-1.5">
+                    <CheckCircle size={18} weight="fill" />
+                  </div>
+                  <span className="text-gray-700 font-semibold">{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        {/* --- SECCIÓN DARK: SEÑALES DE ALERTA --- */}
+        <div className="bg-[#111827] rounded-[4rem] p-10 md:p-16 text-white relative overflow-hidden mb-20 shadow-2xl">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-[#7422ed] opacity-10 blur-[120px]"></div>
+          
+          <div className="relative z-10 flex flex-col md:flex-row gap-12 items-center">
+            <div className="flex-1 text-center md:text-left">
+              <div className="flex items-center justify-center md:justify-start gap-3 text-red-400 font-black text-2xl mb-6 uppercase tracking-tight">
+                <AlertTriangle size={32} /> ¡Cuidado con las estafas!
+              </div>
+              <p className="text-gray-400 text-lg mb-10 max-w-xl">
+                Recuerda: Si te piden dinero para exámenes médicos, capacitaciones o uniformes, **es una estafa**. ¡No compartas tus datos!
+              </p>
+              
+              <div className="grid sm:grid-cols-2 gap-6">
+                <div className="bg-white/5 border border-white/10 p-7 rounded-[2rem] hover:bg-white/10 transition-all group">
+                  <span className="text-red-400 font-black block mb-3 text-lg group-hover:scale-105 transition-transform">
+                    ❌ "Paga por tu examen"
+                  </span>
+                  <p className="text-sm text-gray-400 leading-relaxed">Ninguna empresa real te cobrará un sol por postular o capacitarte.</p>
+                </div>
+                <div className="bg-white/5 border border-white/10 p-7 rounded-[2rem] hover:bg-white/10 transition-all group">
+                  <span className="text-red-400 font-black block mb-3 text-lg group-hover:scale-105 transition-transform">
+                    ❌ "Sueldos irreales"
+                  </span>
+                  <p className="text-sm text-gray-400 leading-relaxed">Duda de ofertas que prometen miles de soles por pocas horas de trabajo.</p>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Sección de Comunidad y Testimonios Modernos */}
-        <div className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-8 pt-12 border-t border-gray-100">
-          <a href="#" className="bg-white border border-gray-100 p-8 rounded-3xl flex items-center gap-6 hover:border-[#7422c4]/20 hover:shadow-lg transition-all group">
-            <div className="bg-purple-50 p-5 rounded-2xl text-[#7422c4] border border-purple-100">
-              <Building2 size={36} strokeWidth={1.5}/>
+        {/* --- FOOTER DE CONFIANZA --- */}
+        <div className="grid md:grid-cols-2 gap-8">
+          <div className="bg-white p-10 rounded-[2.5rem] border border-gray-100 shadow-sm hover:shadow-xl transition-all flex items-center gap-8 group">
+            <div className="w-20 h-20 bg-purple-50 text-[#7422ed] rounded-3xl flex items-center justify-center group-hover:bg-[#7422ed] group-hover:text-white transition-all">
+              <Building2 size={38} />
             </div>
-            <div className="flex-1">
-              <h5 className="font-bold text-lg text-gray-950">Empresas TOP</h5>
-              <p className="text-xs text-gray-500 font-light">Marcas que contratan constantemente con nosotros.</p>
+            <div>
+              <h4 className="text-2xl font-black text-gray-900 mb-1">Empresas TOP</h4>
+              <p className="text-gray-500 font-medium">Marcas aliadas que cumplen con altos estándares de ética.</p>
             </div>
-            <ExternalLink size={16} className="text-gray-300 group-hover:text-[#7422c4] transition-colors" />
-          </a>
-          <a href="#" className="bg-white border border-gray-100 p-8 rounded-3xl flex items-center gap-6 hover:border-[#7422c4]/20 hover:shadow-lg transition-all group">
-            <div className="bg-blue-50 p-5 rounded-2xl text-blue-500 border border-blue-100">
-              <Users size={36} strokeWidth={1.5} />
+          </div>
+          
+          <div className="bg-white p-10 rounded-[2.5rem] border border-gray-100 shadow-sm hover:shadow-xl transition-all flex items-center gap-8 group">
+            <div className="w-20 h-20 bg-blue-50 text-blue-500 rounded-3xl flex items-center justify-center group-hover:bg-blue-500 group-hover:text-white transition-all">
+              <Users size={38} />
             </div>
-            <div className="flex-1">
-              <h5 className="font-bold text-lg text-gray-950">Voz de la Comunidad</h5>
-              <p className="text-xs text-gray-500 font-light">Lee experiencias reales de otros yapeadores.</p>
+            <div>
+              <h4 className="text-2xl font-black text-gray-900 mb-1">Voz Yapera</h4>
+              <p className="text-gray-500 font-medium">Comunidad activa reportando y validando procesos reales.</p>
             </div>
-            <ExternalLink size={16} className="text-gray-300 group-hover:text-[#7422c4] transition-colors" />
-          </a>
+          </div>
         </div>
 
       </div>
-    </section>
+    </div>
   );
 };
 
