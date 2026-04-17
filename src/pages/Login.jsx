@@ -1,44 +1,150 @@
-import React from "react";
-import { auth } from "../firebaseConfig";
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import { User, Mail, Briefcase, Send } from "lucide-react";
+import { auth, googleProvider } from "../firebaseConfig";
+import { signInWithPopup } from "firebase/auth";
+import { FcGoogle } from "react-icons/fc";
 import { useNavigate } from "react-router-dom";
-
 export default function Login() {
   const navigate = useNavigate();
 
-  const handleGoogleLogin = async () => {
-    const provider = new GoogleAuthProvider();
+  const [form, setForm] = useState({
+    nombre: "",
+    email: "",
+    interes: ""
+  });
+
+  const handleChange = (e) => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value
+    });
+  };
+
+
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    alert("✨ Registro completado");
+
+    console.log(form);
+
+    // ✅ IR AL PERFIL
+    navigate("/perfil");
+  };
+
+
+  const loginGoogle = async () => {
     try {
-      await signInWithPopup(auth, provider);
-      navigate("/"); // Redirige al inicio tras el éxito
+      const result = await signInWithPopup(auth, googleProvider);
+
+      const user = result.user;
+
+      alert(`Bienvenida ${user.displayName} ✨`);
+
+      console.log(user);
+
+      // ✅ REDIRIGE AL PERFIL
+      navigate("/perfil");
+
     } catch (error) {
-      console.error("Error al iniciar sesión:", error.message);
+      console.error(error);
     }
   };
 
   return (
-    <div className="pt-48 pb-20 flex flex-col items-center min-h-screen bg-[#F9FAFB]">
-      <div className="bg-white p-12 rounded-[3rem] shadow-2xl text-center max-w-md border border-gray-100">
-        <div className="bg-purple-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
-          <span className="text-4xl">💜</span>
-        </div>
-        <h1 className="text-3xl font-black text-gray-900 mb-4">¡Bienvenido!</h1>
-        <p className="text-gray-500 mb-8 font-light italic">
-          Inicia sesión en Yape Go para gestionar tus postulaciones y ver tu perfil profesional.
+    <div className="min-h-screen bg-[#F9FAFB] pt-32 flex justify-center px-6">
+
+      <motion.form
+        onSubmit={handleSubmit}
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="bg-white p-10 rounded-[2.5rem] shadow-xl max-w-lg w-full space-y-6"
+      >
+        <h1 className="text-3xl font-black text-center text-[#7422c4]">
+          Iniciar Sesión ✨
+        </h1>
+
+        <p className="text-center text-gray-500">
+          Accede a oportunidades laborales y capacitaciones.
         </p>
-        
-        <button 
-          onClick={handleGoogleLogin}
-          className="w-full bg-[#7422c4] text-white py-4 rounded-2xl font-black shadow-xl hover:bg-[#5d1ba1] transition-all flex items-center justify-center gap-3 active:scale-95"
+
+        {/* LOGIN GOOGLE */}
+        <button
+          type="button"
+          onClick={loginGoogle}
+          className="w-full border py-4 rounded-2xl font-black flex justify-center items-center gap-3 hover:bg-gray-50 transition"
         >
-          <img 
-            src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" 
-            alt="Google" 
-            className="w-6 h-6 bg-white rounded-full p-1" 
-          />
+          <FcGoogle size={22} />
           Continuar con Google
         </button>
-      </div>
+
+        <div className="flex items-center gap-4">
+          <hr className="flex-1" />
+          <span className="text-gray-400 text-sm">o</span>
+          <hr className="flex-1" />
+        </div>
+
+        {/* Nombre */}
+        <div>
+          <label className="font-bold">Nombre</label>
+          <div className="flex gap-2 border rounded-xl p-3 mt-2">
+            <User />
+            <input
+              name="nombre"
+              required
+              placeholder="Tu nombre"
+              onChange={handleChange}
+              className="w-full outline-none"
+            />
+          </div>
+        </div>
+
+        {/* Email */}
+        <div>
+          <label className="font-bold">Correo</label>
+          <div className="flex gap-2 border rounded-xl p-3 mt-2">
+            <Mail />
+            <input
+              type="email"
+              name="email"
+              required
+              placeholder="correo@email.com"
+              onChange={handleChange}
+              className="w-full outline-none"
+            />
+          </div>
+        </div>
+
+        {/* Interés */}
+        <div>
+          <label className="font-bold">Área de interés</label>
+          <div className="flex gap-2 border rounded-xl p-3 mt-2">
+            <Briefcase />
+            <select
+              name="interes"
+              required
+              onChange={handleChange}
+              className="w-full outline-none"
+            >
+              <option value="">Selecciona</option>
+              <option>Programación</option>
+              <option>Marketing Digital</option>
+              <option>Diseño</option>
+              <option>Data & IA</option>
+            </select>
+          </div>
+        </div>
+
+        <button
+          type="submit"
+          className="w-full bg-[#7422c4] text-white py-4 rounded-2xl font-black flex justify-center gap-2 hover:bg-[#5d1ba1]"
+        >
+          Ingresar <Send />
+        </button>
+
+      </motion.form>
     </div>
   );
 }
