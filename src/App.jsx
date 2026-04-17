@@ -1,7 +1,4 @@
 import React from "react";
-
-
-
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
@@ -24,16 +21,18 @@ import FormularioPostulacion from "./pages/FormularioPostulacion";
 import Login from "./pages/Login";
 import Registro from "./pages/Registro";
 import Perfil from "./pages/Perfil";
+import Curso from "./pages/Curso";
 
 function App() {
   return (
     <Router>
+     
 
       {/* ✅ NAVBAR SIEMPRE VISIBLE */}
       <Navbar />
 
       <Routes>
-
+ <Route path="/curso" element={<Curso />} />
         {/* 🏠 HOME */}
         <Route
           path="/"
@@ -55,6 +54,7 @@ function App() {
         <Route path="/orientacion" element={<Orientacion />} />
         <Route path="/confianzalaboral" element={<ConfianzaLaboral />} />
 
+        {/* 📄 FUNCIONALIDADES */}
         <Route path="/postular/:area" element={<FormularioPostulacion />} />
         <Route path="/area/:id" element={<DetalleArea />} />
     
