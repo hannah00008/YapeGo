@@ -1,14 +1,15 @@
-import React from "react";
-import { useEffect, useState } from "react";
-import { auth } from "../firebaseConfig";
-import { onAuthStateChanged } from "firebase/auth";
+import React, { useEffect, useState } from "react";
+import { auth, db } from "../firebaseConfig";
 import { useNavigate } from "react-router-dom";
-
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import { doc, setDoc, getDoc } from "firebase/firestore";
 
 export default function Perfil() {
 
   const [user, setUser] = useState(null);
   const [editando, setEditando] = useState(false);
+  const [progreso, setProgreso] = useState(0);
+  const navigate = useNavigate();
 
   const [perfil, setPerfil] = useState({
     nombre: "",
@@ -16,24 +17,43 @@ export default function Perfil() {
     telefono: "",
     profesion: "",
     estudios: "",
+    habilidades: "",
     sobreMi: "",
-    habilidades: ""
+    foto: ""
   });
 
+  /* ========================
+      AUTH + FIRESTORE
+  ======================== */
+
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
+
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
 
       if (currentUser) {
-        setPerfil((prev) => ({
-          ...prev,
-          nombre: currentUser.displayName || "",
-        }));
+        setUser(currentUser);
+
+        const ref = doc(db, "perfiles", currentUser.uid);
+        const snap = await getDoc(ref);
+
+        if (snap.exists()) {
+          setPerfil(snap.data());
+        }
       }
     });
 
     return () => unsubscribe();
+
   }, []);
+
+  /* ========================
+        PROGRESO PERFIL
+  ======================== */
+
+  useEffect(() => {
+    const filled = Object.values(perfil).filter(v => v !== "").length;
+    setProgreso(Math.round((filled / 8) * 100));
+  }, [perfil]);
 
   const handleChange = (e) => {
     setPerfil({
@@ -42,145 +62,213 @@ export default function Perfil() {
     });
   };
 
+  /* ========================
+        GUARDAR
+  ======================== */
+
+  const guardarCambios = async () => {
+
+    if (!user) return;
+
+    try {
+      const ref = doc(db, "perfiles", user.uid);
+      await setDoc(ref, perfil);
+
+      setEditando(false);
+      alert("Perfil guardado correctamente 🚀");
+
+    } catch (error) {
+      console.error(error);
+      alert("Error al guardar perfil");
+    }
+  };
+
+  /* ========================
+        LOGOUT
+  ======================== */
+
   const cerrarSesion = async () => {
     await signOut(auth);
+    navigate("/");
   };
 
-  const guardarCambios = () => {
-    setEditando(false);
-    alert("Perfil actualizado ✅");
-  };
+  if (!user) {
+    return <p className="pt-32 text-center">Cargando perfil...</p>;
+  }
 
   return (
-    <div className="min-h-screen pt-32 px-6 bg-gradient-to-b from-purple-50 to-white">
+    <div className="min-h-screen bg-purple-50">
 
-      <h1 className="text-4xl font-black text-center text-purple-700 mb-10">
-        Mi Perfil 👤
-      </h1>
+      {/* ========================
+            BANNER FIJO
+      ======================== */}
 
-      <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl p-8">
+      <div className="bg-gradient-to-r from-purple-600 via-purple-500 to-pink-500 h-56 w-full" />
 
-        {/* FOTO Y DATOS */}
-        <div className="flex flex-col md:flex-row gap-8 items-center">
+      {/* ========================
+            AVATAR FLOTANTE
+      ======================== */}
 
-          <div className="text-center">
-            <div className="w-32 h-32 bg-purple-200 rounded-full flex items-center justify-center text-4xl">
-              👤
-            </div>
+      <div className="flex flex-col items-center -mt-16">
+        <img
+          src={perfil.foto || "https://i.pravatar.cc/150"}
+          className="w-32 h-32 rounded-full border-4 border-white shadow-2xl object-cover"
+        />
 
-            {editando && (
-              <button className="mt-3 text-sm text-purple-600">
-                Cambiar foto
-              </button>
-            )}
-          </div>
+        <h2 className="text-2xl font-bold mt-4 text-purple-700">
+          {perfil.nombre || "Usuario"}
+        </h2>
 
-          <div className="w-full space-y-3">
 
-            <input
-              name="nombre"
-              value={perfil.nombre}
-              onChange={handleChange}
-              disabled={!editando}
-              placeholder="Nombre"
-              className="w-full border rounded-lg p-2"
+        <p className="text-gray-500 text-sm">
+          Tu perfil tiene más visibilidad para empresas 🚀
+        </p>
+      </div>
+
+      {/* ========================
+            CARD PRINCIPAL
+      ======================== */}
+
+      <div className="max-w-4xl mx-auto bg-white rounded-3xl shadow-2xl p-10 mt-8 mb-16">
+
+        {/* PROGRESO */}
+        <div className="mb-10">
+          <p className="font-semibold mb-2 text-center">
+            Perfil completado {progreso}%
+          </p>
+
+          <div className="w-full bg-gray-200 rounded-full h-4">
+            <div
+              className="bg-gradient-to-r from-purple-600 to-pink-500 h-4 rounded-full transition-all"
+              style={{ width: `${progreso}%` }}
             />
-
-            <input
-              value={user?.email || ""}
-              disabled
-              className="w-full border rounded-lg p-2 bg-gray-100"
-            />
-
-            <input
-              name="ubicacion"
-              value={perfil.ubicacion}
-              onChange={handleChange}
-              disabled={!editando}
-              placeholder="Ubicación"
-              className="w-full border rounded-lg p-2"
-            />
-
-            <input
-              name="telefono"
-              value={perfil.telefono}
-              onChange={handleChange}
-              disabled={!editando}
-              placeholder="Teléfono"
-              className="w-full border rounded-lg p-2"
-            />
-
           </div>
         </div>
 
-        {/* PERFIL PROFESIONAL */}
-        <div className="mt-10 space-y-4">
+        {/* ========================
+              INFORMACIÓN
+        ======================== */}
 
-          <h2 className="text-xl font-bold text-purple-700">
-            Información Profesional 💼
-          </h2>
+        <h3 className="text-lg font-bold text-purple-600 mb-4">
+          Información Personal
+        </h3>
+
+        <div className="grid md:grid-cols-2 gap-4">
+
+
+          <input name="nombre"
+            value={perfil.nombre}
+            onChange={handleChange}
+            disabled={!editando}
+            placeholder="Nombre"
+            className="input" />
 
           <input
-            name="profesion"
+            value={user?.email || ""}
+            disabled
+            className="input bg-gray-100" />
+
+          <input name="ubicacion"
+            value={perfil.ubicacion}
+            onChange={handleChange}
+            disabled={!editando}
+            placeholder="Ubicación"
+            className="input" />
+
+          <input name="telefono"
+            value={perfil.telefono}
+            onChange={handleChange}
+            disabled={!editando}
+            placeholder="Teléfono"
+            className="input" />
+
+          <input name="profesion"
             value={perfil.profesion}
             onChange={handleChange}
             disabled={!editando}
             placeholder="Profesión"
-            className="w-full border rounded-lg p-2"
-          />
+            className="input" />
 
-          <input
-            name="estudios"
+          <input name="estudios"
             value={perfil.estudios}
             onChange={handleChange}
             disabled={!editando}
-            placeholder="Nivel de estudios"
-            className="w-full border rounded-lg p-2"
-          />
-
+            placeholder="Estudios"
+            className="input" />
           <input
-            name="habilidades"
-            value={perfil.habilidades}
+            name="foto"
+            value={perfil.foto}
             onChange={handleChange}
             disabled={!editando}
-            placeholder="Habilidades (React, Comunicación, Diseño...)"
-            className="w-full border rounded-lg p-2"
-          />
-
-          <textarea
-            name="sobreMi"
-            value={perfil.sobreMi}
-            onChange={handleChange}
-            disabled={!editando}
-            placeholder="Sobre mí..."
-            className="w-full border rounded-lg p-2 h-28"
+            placeholder="Link de foto de perfil"
+            className="input"
           />
 
         </div>
 
+
+        {/* SOBRE MI */}
+
+        <h3 className="text-lg font-bold text-purple-600 mt-8 mb-2">
+          Sobre mí
+        </h3>
+
+        <textarea
+          name="sobreMi"
+          value={perfil.sobreMi}
+          onChange={handleChange}
+          disabled={!editando}
+          placeholder="Cuéntanos sobre ti..."
+          className="input h-28"
+        />
+
+        {/* HABILIDADES */}
+
+        <h3 className="text-lg font-bold text-purple-600 mt-8 mb-2">
+          Habilidades
+        </h3>
+
+        <input
+          name="habilidades"
+          value={perfil.habilidades}
+          onChange={handleChange}
+          disabled={!editando}
+          placeholder="React, Comunicación, Diseño..."
+          className="input"
+        />
+
+        <div className="flex flex-wrap gap-2 mt-3">
+          {perfil.habilidades.split(",").map((h, i) => (
+            h && (
+              <span key={i}
+                className="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm shadow">
+                {h.trim()}
+              </span>
+            )
+          ))}
+        </div>
+
         {/* BOTONES */}
-        <div className="flex flex-wrap gap-4 mt-8 justify-center">
+
+        <div className="flex gap-4 justify-center mt-10">
 
           {!editando ? (
             <button
               onClick={() => setEditando(true)}
-              className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-full"
-            >
+              className="bg-gradient-to-r from-purple-600 to-pink-500 text-white px-8 py-3 rounded-full shadow-lg hover:scale-105 transition">
               Editar Perfil
             </button>
           ) : (
             <button
               onClick={guardarCambios}
-              className="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-full"
-            >
-              Guardar Cambios
+              className="bg-green-500 text-white px-8 py-3 rounded-full shadow-lg hover:scale-105 transition">
+              Guardar
             </button>
           )}
 
           <button
             onClick={cerrarSesion}
-            className="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-full"
-          >
+            className="bg-red-500 text-white px-8 py-3 rounded-full shadow-lg hover:scale-105 transition">
             Cerrar sesión
           </button>
 
