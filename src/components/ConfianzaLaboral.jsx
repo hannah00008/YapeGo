@@ -1,5 +1,6 @@
 import React from 'react';
 import { ShieldCheck, AlertTriangle, CheckCircle, Building2, Users, Lock } from 'lucide-react';
+import Marquee from "react-fast-marquee";
 
 const ConfianzaLaboral = () => {
   return (
@@ -112,23 +113,75 @@ const ConfianzaLaboral = () => {
 
         {/* --- FOOTER DE CONFIANZA --- */}
         <div className="grid md:grid-cols-2 gap-8">
-          <div className="bg-white p-10 rounded-[2.5rem] border border-gray-100 shadow-sm hover:shadow-xl transition-all flex items-center gap-8 group">
-            <div className="w-20 h-20 bg-purple-50 text-[#7422ed] rounded-3xl flex items-center justify-center group-hover:bg-[#7422ed] group-hover:text-white transition-all">
-              <Building2 size={38} />
+          
+          {/* ✅ SECCIÓN EMPRESAS TOP (CORREGIDA SIN DUPLICADOS) */}
+          <div className="bg-white p-10 rounded-[2.5rem] border border-gray-100 shadow-sm hover:shadow-xl transition-all flex flex-col gap-8 group overflow-hidden">
+            <div className="flex items-center gap-8">
+              <div className="w-20 h-20 bg-purple-50 text-[#7422ed] rounded-3xl flex items-center justify-center group-hover:bg-[#7422ed] group-hover:text-white transition-all shadow-inner">
+                <Building2 size={38} />
+              </div>
+              <div>
+                <h4 className="text-2xl font-black text-gray-900 mb-1 flex items-center gap-2">
+                  Empresas TOP 
+                  <span className="bg-yellow-100 text-yellow-700 text-[10px] px-2.5 py-1 rounded-full uppercase font-bold tracking-wider">
+                    De primera calidad
+                  </span>
+                </h4>
+                <p className="text-gray-500 font-medium leading-relaxed">Marcas aliadas que cumplen con estándares de ética.</p>
+              </div>
             </div>
-            <div>
-              <h4 className="text-2xl font-black text-gray-900 mb-1">Empresas TOP</h4>
-              <p className="text-gray-500 font-medium">Marcas aliadas que cumplen con altos estándares de ética.</p>
+            
+            {/* Carrusel Corregido */}
+            <div className="mt-2 -mx-10"> 
+              <Marquee gradient={false} speed={45} pauseOnHover={true} className="flex items-center">
+                {[
+                  { name: "Interbank", url: "https://upload.wikimedia.org/wikipedia/commons/e/ed/Logo_Interbank.svg" },
+                  { name: "BCP", url: "https://upload.wikimedia.org/wikipedia/commons/c/c5/Banco_de_Cr%C3%A9dito_del_Per%C3%BA_logo.svg" },
+                  { name: "Alicorp", url: "https://upload.wikimedia.org/wikipedia/commons/0/07/Logo_alicorp.svg" },
+                  { name: "Gloria", url: "https://upload.wikimedia.org/wikipedia/commons/c/cb/Logo_Grupo_Gloria.svg" },
+                  { name: "Saga Falabella", url: "https://upload.wikimedia.org/wikipedia/commons/8/87/Falabella.svg" },
+                  { name: "Rappi", url: "https://upload.wikimedia.org/wikipedia/commons/0/06/Rappi_logo.svg" },
+                ].map((logo, index) => (
+                  <div key={index} className="mx-10 flex items-center justify-center h-10 w-32 group/logo">
+                    <img 
+                      src={logo.url} 
+                      alt={logo.name} 
+                      className="max-h-full max-w-full object-contain filter grayscale opacity-60 group-hover/logo:grayscale-0 group-hover/logo:opacity-100 transition-all duration-300"
+                      onError={(e) => { e.target.style.display = 'none'; }}
+                    />
+                  </div>
+                ))}
+              </Marquee>
             </div>
           </div>
           
-          <div className="bg-white p-10 rounded-[2.5rem] border border-gray-100 shadow-sm hover:shadow-xl transition-all flex items-center gap-8 group">
-            <div className="w-20 h-20 bg-blue-50 text-blue-500 rounded-3xl flex items-center justify-center group-hover:bg-blue-500 group-hover:text-white transition-all">
-              <Users size={38} />
+          {/* Voz Yapera con Avatares */}
+          <div className="bg-white p-10 rounded-[2.5rem] border border-gray-100 shadow-sm hover:shadow-xl transition-all flex flex-col gap-8 group">
+            <div className="flex items-center gap-8">
+              <div className="w-20 h-20 bg-blue-50 text-blue-500 rounded-3xl flex items-center justify-center group-hover:bg-blue-500 group-hover:text-white transition-all shadow-inner">
+                <Users size={38} />
+              </div>
+              <div>
+                <h4 className="text-2xl font-black text-gray-900 mb-1">Voz Yapera</h4>
+                <p className="text-gray-500 font-medium leading-relaxed">Comunidad activa reportando y validando procesos.</p>
+              </div>
             </div>
-            <div>
-              <h4 className="text-2xl font-black text-gray-900 mb-1">Voz Yapera</h4>
-              <p className="text-gray-500 font-medium">Comunidad activa reportando y validando procesos reales.</p>
+
+            <div className="flex items-center justify-between border-t border-gray-100 pt-6">
+              <div className="flex -space-x-4">
+                {[1,2,3,4].map(i => (
+                  <div key={i} className="w-12 h-12 rounded-full border-4 border-white bg-gray-100 overflow-hidden shadow-md">
+                    <img src={`https://i.pravatar.cc/100?img=${i+15}`} alt="user avatar" className="w-full h-full object-cover" />
+                  </div>
+                ))}
+                <div className="w-12 h-12 rounded-full border-4 border-white bg-[#7422ed] flex items-center justify-center text-[10px] text-white font-extrabold shadow-md z-10">
+                  +2k
+                </div>
+              </div>
+              <span className="flex items-center gap-2 bg-green-50 text-green-600 px-4 py-1.5 rounded-full text-sm font-bold border border-green-100 shadow-sm">
+                <div className="w-2.5 h-2.5 bg-green-500 rounded-full animate-pulse"></div>
+                12 validados hoy
+              </span>
             </div>
           </div>
         </div>

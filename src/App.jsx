@@ -1,9 +1,11 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import ScrollToTop from "./components/ScrollToTop"; // ✅ IMPORTADO
+import ScrollToTop from "./components/ScrollToTop"; // ✅ Tu componente
 
 import Hero from "./components/Hero";
 import Areas from "./components/Areas";
@@ -23,19 +25,37 @@ import Login from "./pages/Login";
 import Registro from "./pages/Registro";
 import Perfil from "./pages/Perfil";
 import Curso from "./pages/Curso";
+import Postulacion from "./pages/Postulacion"; // ✅ Ruta nueva de tu compañera
+
+function ScrollToHash() {
+  const { hash } = useLocation();
+
+  useEffect(() => {
+    if (hash) {
+      const el = document.querySelector(hash);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  }, [hash]);
+
+  return null;
+}
 
 function App() {
   return (
     <Router>
-
-      {/* ✅ SCROLL ARRIBA AL CAMBIAR DE RUTA */}
+      {/* ✅ COMBINACIÓN DE UTILIDADES: Scroll arriba y soporte para anclas # */}
       <ScrollToTop />
+      <ScrollToHash />
 
       {/* ✅ NAVBAR SIEMPRE VISIBLE */}
       <Navbar />
 
       <Routes>
+        {/* ✅ RUTAS DE CURSO Y POSTULACIÓN */}
         <Route path="/curso" element={<Curso />} />
+        <Route path="/postulacion" element={<Postulacion />} />
 
         {/* 🏠 HOME */}
         <Route
@@ -73,7 +93,6 @@ function App() {
       {/* ✅ SIEMPRE VISIBLES */}
       <Footer />
       <ChatBotYape />
-
     </Router>
   );
 }
