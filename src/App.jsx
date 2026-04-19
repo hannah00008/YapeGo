@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import ScrollToTop from "./components/ScrollToTop"; // ✅ IMPORTADO
 
 import Hero from "./components/Hero";
 import Areas from "./components/Areas";
@@ -26,13 +27,16 @@ import Curso from "./pages/Curso";
 function App() {
   return (
     <Router>
-     
+
+      {/* ✅ SCROLL ARRIBA AL CAMBIAR DE RUTA */}
+      <ScrollToTop />
 
       {/* ✅ NAVBAR SIEMPRE VISIBLE */}
       <Navbar />
 
       <Routes>
- <Route path="/curso" element={<Curso />} />
+        <Route path="/curso" element={<Curso />} />
+
         {/* 🏠 HOME */}
         <Route
           path="/"
@@ -57,7 +61,6 @@ function App() {
         {/* 📄 FUNCIONALIDADES */}
         <Route path="/postular/:area" element={<FormularioPostulacion />} />
         <Route path="/area/:id" element={<DetalleArea />} />
-    
 
         {/* 🔐 AUTH */}
         <Route path="/login" element={<Login />} />
@@ -65,7 +68,6 @@ function App() {
 
         {/* 👤 PERFIL */}
         <Route path="/perfil" element={<Perfil />} />
-
       </Routes>
 
       {/* ✅ SIEMPRE VISIBLES */}
