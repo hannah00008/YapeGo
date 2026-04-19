@@ -204,14 +204,14 @@ const generarResultado = () => {
                     <CheckCircle /> ¡Todo listo para postular!
                   </div>
                   <Link
-                    to="/areas"
+                    to="/#areas"
                     className="inline-flex items-center gap-2 mt-4 bg-[#7422c4] text-white px-8 py-4 rounded-2xl font-black hover:bg-[#5d1ba1] transition-all shadow-xl shadow-purple-200"
                   >
                     Ver áreas abiertas <ChevronRight size={20} />
                   </Link>
                 </div>
               ) : (
-                <div className="text-center">
+  <div className="text-center">
   <div className="text-rose-600 font-black text-xl flex justify-center gap-2 mb-3">
     <XCircle /> Estás en proceso 💪
   </div>
@@ -227,7 +227,16 @@ const generarResultado = () => {
       </p>
     ))}
   </div>
+
+  <Link
+  to="/#areas"
+  className="inline-flex items-center gap-2 mt-6 bg-[#7422c4] text-white px-8 py-4 rounded-2xl font-black hover:bg-[#5d1ba1] transition-all shadow-xl shadow-purple-200"
+>
+  Explora áreas recomendadas <ChevronRight size={20} />
+</Link>
 </div>
+
+
               )}
             </motion.div>
           )}

@@ -16,7 +16,7 @@ const areas = [
 
 function Areas() {
   return (
-    <section className="py-24 bg-white overflow-hidden">
+    <section id="areas" className="py-24 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-6">
         
         <div className="text-center mb-20">

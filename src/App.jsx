@@ -1,5 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -22,17 +24,34 @@ import Login from "./pages/Login";
 import Registro from "./pages/Registro";
 import Perfil from "./pages/Perfil";
 import Curso from "./pages/Curso";
+import Postulacion from "./pages/Postulacion";
+
+function ScrollToHash() {
+  const { hash } = useLocation();
+
+  useEffect(() => {
+    if (hash) {
+      const el = document.querySelector(hash);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  }, [hash]);
+
+  return null;
+}
 
 function App() {
   return (
     <Router>
      
-
+<ScrollToHash />
       {/* ✅ NAVBAR SIEMPRE VISIBLE */}
       <Navbar />
 
       <Routes>
  <Route path="/curso" element={<Curso />} />
+ <Route path="/postulacion" element={<Postulacion />} />
         {/* 🏠 HOME */}
         <Route
           path="/"

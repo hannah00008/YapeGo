@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
 export default function Curso() {
@@ -31,8 +31,15 @@ export default function Curso() {
     },
   ];
 
-  const [vistos, setVistos] = useState([]);
+  const [vistos, setVistos] = useState(() => {
+  const guardado = localStorage.getItem("videosVistos");
+  return guardado ? JSON.parse(guardado) : [];
+});
 const [filtro, setFiltro] = useState("Todos");
+
+useEffect(() => {
+  localStorage.setItem("videosVistos", JSON.stringify(vistos));
+}, [vistos]);
 
   const toggleVisto = (index) => {
     if (vistos.includes(index)) {
