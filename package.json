@@ -4,7 +4,6 @@
   "version": "0.0.0",
   "type": "module",
   "homepage": "https://hannah00008.github.io/YapeGo",
-
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -13,7 +12,6 @@
     "lint": "eslint .",
     "preview": "vite preview"
   },
-
   "dependencies": {
     "@tailwindcss/vite": "^4.1.18",
     "firebase": "^12.12.0",
@@ -27,7 +25,6 @@
     "react-simple-chatbot": "^0.6.1",
     "styled-components": "^4.4.1"
   },
-
   "devDependencies": {
     "@eslint/js": "^9.39.1",
     "@types/react": "^19.2.5",

@@ -1,11 +1,14 @@
-// src/main.jsx
+
+import { HashRouter } from "react-router-dom";
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App.jsx'; // ⬅️ Asegúrate de que importa App
-import './index.css';         // Importa el CSS (incluido Tailwind)
+import App from './App.jsx';
+import './index.css';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <App /> {/* ⬅️ Renderiza el componente App */}
+    <HashRouter> 
+      <App />
+    </HashRouter>
   </React.StrictMode>,
 );

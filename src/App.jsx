@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
@@ -44,7 +44,7 @@ function ScrollToHash() {
 
 function App() {
   return (
-    <Router>
+    <>
       {/* ✅ COMBINACIÓN DE UTILIDADES: Scroll arriba y soporte para anclas # */}
       <ScrollToTop />
       <ScrollToHash />
@@ -93,7 +93,7 @@ function App() {
       {/* ✅ SIEMPRE VISIBLES */}
       <Footer />
       <ChatBotYape />
-    </Router>
+    </>
   );
 }
 
